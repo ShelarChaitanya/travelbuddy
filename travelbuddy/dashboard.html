@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Travel Together</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1><i class="fas fa-plane"></i> Travel Together</h1>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="search.html" class="nav-link">Find Buddies</a>
+                <a href="trips.html" class="nav-link">My Trips</a>
+                <a href="messages.html" class="nav-link">Messages <span id="unreadCount" class="badge"></span></a>
+                <div class="user-menu">
+                    <div class="user-avatar" onclick="toggleUserMenu()">
+                        <img id="userAvatar" src="https://via.placeholder.com/40" alt="User Avatar">
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1>Welcome back, <span id="userName">Traveler</span>!</h1>
+                    <p>Ready for your next adventure? Let's find your perfect travel buddy.</p>
+                </div>
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="matchCount">0</h3>
+                            <p>New Matches</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="messageCount">0</h3>
+                            <p>Unread Messages</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="tripCount">0</h3>
+                            <p>Active Trips</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-cards">
+                    <div class="action-card" onclick="window.location.href='search.html'">
+                        <i class="fas fa-search"></i>
+                        <h3>Find Travel Buddies</h3>
+                        <p>Discover compatible travelers for your next adventure</p>
+                    </div>
+                    <div class="action-card" onclick="window.location.href='trips.html#create'">
+                        <i class="fas fa-plus-circle"></i>
+                        <h3>Create New Trip</h3>
+                        <p>Plan a new trip and invite others to join</p>
+                    </div>
+                    <div class="action-card" onclick="window.location.href='profile.html'">
+                        <i class="fas fa-user-edit"></i>
+                        <h3>Update Profile</h3>
+                        <p>Keep your profile and preferences up to date</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Matches -->
+            <section class="recent-matches">
+                <div class="section-header">
+                    <h2>Recent Matches</h2>
+                    <a href="search.html" class="view-all">View All</a>
+                </div>
+                <div class="matches-grid" id="recentMatches">
+                    <!-- Matches will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Upcoming Trips -->
+            <section class="upcoming-trips">
+                <div class="section-header">
+                    <h2>Upcoming Trips</h2>
+                    <a href="trips.html" class="view-all">View All</a>
+                </div>
+                <div class="trips-list" id="upcomingTrips">
+                    <!-- Trips will be loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Recent Messages -->
+            <section class="recent-messages">
+                <div class="section-header">
+                    <h2>Recent Messages</h2>
+                    <a href="messages.html" class="view-all">View All</a>
+                </div>
+                <div class="messages-list" id="recentMessages">
+                    <!-- Messages will be loaded dynamically -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading your dashboard...</p>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

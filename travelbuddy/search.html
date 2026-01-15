@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Travel Buddies - Travel Together</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1><i class="fas fa-plane"></i> Travel Together</h1>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="search.html" class="nav-link active">Find Buddies</a>
+                <a href="trips.html" class="nav-link">My Trips</a>
+                <a href="messages.html" class="nav-link">Messages <span id="unreadCount" class="badge"></span></a>
+                <div class="user-menu">
+                    <div class="user-avatar" onclick="toggleUserMenu()">
+                        <img id="userAvatar" src="https://via.placeholder.com/40" alt="User Avatar">
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="container">
+            <!-- Search Header -->
+            <section class="search-header">
+                <h1><i class="fas fa-search"></i> Find Your Perfect Travel Buddy</h1>
+                <p>Discover compatible travelers who share your interests and destinations</p>
+            </section>
+
+            <!-- Search Filters -->
+            <section class="search-filters">
+                <div class="filters-card">
+                    <h3>Search Filters</h3>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label for="destinationFilter">Destination</label>
+                            <input type="text" id="destinationFilter" placeholder="Where do you want to go?">
+                        </div>
+                        <div class="filter-group">
+                            <label for="startDateFilter">Travel Start Date</label>
+                            <input type="date" id="startDateFilter">
+                        </div>
+                        <div class="filter-group">
+                            <label for="endDateFilter">Travel End Date</label>
+                            <input type="date" id="endDateFilter">
+                        </div>
+                        <div class="filter-group">
+                            <label for="budgetFilter">Max Budget (USD)</label>
+                            <input type="number" id="budgetFilter" placeholder="0" min="0">
+                        </div>
+                        <div class="filter-group">
+                            <label for="travelStyleFilter">Travel Style</label>
+                            <select id="travelStyleFilter">
+                                <option value="">Any Style</option>
+                                <option value="budget">Budget</option>
+                                <option value="mid-range">Mid-range</option>
+                                <option value="luxury">Luxury</option>
+                                <option value="backpacking">Backpacking</option>
+                                <option value="comfort">Comfort</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="ageRangeFilter">Age Range</label>
+                            <select id="ageRangeFilter">
+                                <option value="">Any Age</option>
+                                <option value="18-25">18-25</option>
+                                <option value="26-35">26-35</option>
+                                <option value="36-45">36-45</option>
+                                <option value="46-55">46-55</option>
+                                <option value="55+">55+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="btn btn-primary" onclick="searchBuddies()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button class="btn btn-outline" onclick="clearFilters()">
+                            <i class="fas fa-times"></i> Clear Filters
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search Mode Toggle -->
+            <section class="search-modes">
+                <div class="mode-tabs">
+                    <button class="mode-tab active" data-mode="discover" onclick="switchMode('discover')">
+                        <i class="fas fa-compass"></i> Discover
+                    </button>
+                    <button class="mode-tab" data-mode="swipe" onclick="switchMode('swipe')">
+                        <i class="fas fa-heart"></i> Swipe Mode
+                    </button>
+                </div>
+            </section>
+
+            <!-- Discover Mode -->
+            <section id="discoverMode" class="search-results">
+                <div class="results-header">
+                    <h2>Potential Travel Buddies</h2>
+                    <div class="sort-options">
+                        <label for="sortBy">Sort by:</label>
+                        <select id="sortBy" onchange="sortResults()">
+                            <option value="compatibility">Compatibility</option>
+                            <option value="recent">Recently Joined</option>
+                            <option value="location">Location</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="matches-grid" id="searchResults">
+                    <!-- Results will be loaded here -->
+                </div>
+                <div class="load-more-container">
+                    <button class="btn btn-outline" id="loadMoreBtn" onclick="loadMoreResults()" style="display: none;">
+                        Load More Results
+                    </button>
+                </div>
+            </section>
+
+            <!-- Swipe Mode -->
+            <section id="swipeMode" class="swipe-container" style="display: none;">
+                <div class="swipe-header">
+                    <h2>Swipe to Find Matches</h2>
+                    <p>Swipe right to like, left to pass</p>
+                </div>
+                <div class="swipe-cards" id="swipeCards">
+                    <!-- Swipe cards will be loaded here -->
+                </div>
+                <div class="swipe-actions">
+                    <button class="swipe-btn pass-btn" onclick="passCurrentCard()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <button class="swipe-btn like-btn" onclick="likeCurrentCard()">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content profile-modal-content">
+            <span class="close" onclick="closeModal('profileModal')">&times;</span>
+            <div id="profileModalContent">
+                <!-- Profile content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Match Modal -->
+    <div id="matchModal" class="modal">
+        <div class="modal-content match-modal-content">
+            <div class="match-celebration">
+                <i class="fas fa-heart celebration-heart"></i>
+                <h2>It's a Match!</h2>
+                <p>You and <span id="matchedUserName"></span> both liked each other!</p>
+                <div class="match-actions">
+                    <button class="btn btn-primary" onclick="startConversation()">
+                        <i class="fas fa-comments"></i> Start Conversation
+                    </button>
+                    <button class="btn btn-outline" onclick="closeModal('matchModal')">
+                        Continue Browsing
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Finding your perfect travel buddies...</p>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>
