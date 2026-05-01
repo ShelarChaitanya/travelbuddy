@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Travel Together</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/messages.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1><i class="fas fa-plane"></i> Travel Together</h1>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="search.html" class="nav-link">Find Buddies</a>
+                <a href="trips.html" class="nav-link">My Trips</a>
+                <a href="messages.html" class="nav-link active">Messages</a>
+                <div class="user-menu">
+                    <div class="user-avatar" onclick="toggleUserMenu()">
+                        <img id="userAvatar" src="https://via.placeholder.com/40" alt="User Avatar">
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="messages-main">
+        <div class="messages-container">
+            <!-- Conversations Sidebar -->
+            <div class="conversations-sidebar">
+                <div class="sidebar-header">
+                    <h2><i class="fas fa-comments"></i> Messages</h2>
+                    <button class="btn btn-primary btn-small" onclick="showComposeModal()">
+                        <i class="fas fa-plus"></i> New
+                    </button>
+                </div>
+                
+                <div class="search-conversations">
+                    <input type="text" id="conversationSearch" placeholder="Search conversations..." onkeyup="filterConversations()">
+                </div>
+                
+                <div class="conversations-list" id="conversationsList">
+                    <!-- Conversations will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div class="chat-placeholder" id="chatPlaceholder">
+                    <div class="placeholder-content">
+                        <i class="fas fa-comments"></i>
+                        <h3>Select a conversation</h3>
+                        <p>Choose a conversation from the sidebar to start messaging</p>
+                    </div>
+                </div>
+                
+                <div class="chat-container" id="chatContainer" style="display: none;">
+                    <!-- Chat Header -->
+                    <div class="chat-header">
+                        <div class="chat-user-info">
+                            <img id="chatUserAvatar" src="" alt="User Avatar" class="chat-avatar">
+                            <div class="chat-user-details">
+                                <h3 id="chatUserName"></h3>
+                                <span id="chatUserStatus" class="user-status"></span>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="btn btn-outline btn-small" onclick="viewChatUserProfile()">
+                                <i class="fas fa-user"></i> Profile
+                            </button>
+                            <button class="btn btn-outline btn-small" onclick="blockUser()">
+                                <i class="fas fa-ban"></i> Block
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Messages Area -->
+                    <div class="messages-area" id="messagesArea">
+                        <!-- Messages will be loaded here -->
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="message-input-area">
+                        <div class="message-input-container">
+                            <textarea id="messageInput" placeholder="Type your message..." rows="1" onkeypress="handleMessageKeyPress(event)" oninput="autoResizeTextarea()"></textarea>
+                            <button class="send-button" onclick="sendMessage()" id="sendButton">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="message-tools">
+                            <button class="tool-button" onclick="insertEmoji('😊')">😊</button>
+                            <button class="tool-button" onclick="insertEmoji('✈️')">✈️</button>
+                            <button class="tool-button" onclick="insertEmoji('🏔️')">🏔️</button>
+                            <button class="tool-button" onclick="insertEmoji('🏖️')">🏖️</button>
+                            <button class="tool-button" onclick="insertEmoji('📸')">📸</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Compose Message Modal -->
+    <div id="composeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('composeModal')">&times;</span>
+            <h2>New Message</h2>
+            <form id="composeForm" class="compose-form">
+                <div class="form-group">
+                    <label for="recipientSearch">To:</label>
+                    <input type="text" id="recipientSearch" placeholder="Search for a user..." onkeyup="searchUsers()" autocomplete="off">
+                    <div class="search-results" id="userSearchResults"></div>
+                    <input type="hidden" id="selectedRecipientId">
+                </div>
+                <div class="form-group">
+                    <label for="messageSubject">Subject (Optional):</label>
+                    <input type="text" id="messageSubject" placeholder="Message subject">
+                </div>
+                <div class="form-group">
+                    <label for="composeMessage">Message:</label>
+                    <textarea id="composeMessage" rows="4" placeholder="Write your message..." required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('composeModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="userProfileModal" class="modal">
+        <div class="modal-content profile-modal-content">
+            <span class="close" onclick="closeModal('userProfileModal')">&times;</span>
+            <div id="userProfileContent">
+                <!-- Profile content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/messages.js"></script>
+</body>
+</html>

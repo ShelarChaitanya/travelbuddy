@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile - Travel Together</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1><i class="fas fa-plane"></i> Travel Together</h1>
+            </div>
+        </nav>
+    </header>
+
+    <main class="profile-setup-main">
+        <div class="container">
+            <div class="setup-header">
+                <h1>Complete Your Profile</h1>
+                <p>Help us find your perfect travel buddies by sharing a bit about yourself and your travel preferences.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text">Step <span id="currentStep">1</span> of 4</span>
+            </div>
+
+            <form id="profileSetupForm" class="setup-form">
+                <!-- Step 1: Basic Information -->
+                <div class="step-content active" data-step="1">
+                    <h2><i class="fas fa-user"></i> Basic Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age" min="18" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer_not_to_say">Prefer not to say</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" placeholder="City, Country" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="phone">Phone Number (Optional)</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 234 567 8900">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="bio">Tell us about yourself</label>
+                            <textarea id="bio" name="bio" rows="4" placeholder="Share your travel experiences, interests, and what makes you a great travel companion..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Travel Preferences -->
+                <div class="step-content" data-step="2">
+                    <h2><i class="fas fa-map-marked-alt"></i> Travel Preferences</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="travelStyle">Travel Style</label>
+                            <select id="travelStyle" name="travel_style" required>
+                                <option value="">Select Style</option>
+                                <option value="budget">Budget Traveler</option>
+                                <option value="mid-range">Mid-range</option>
+                                <option value="luxury">Luxury</option>
+                                <option value="backpacking">Backpacking</option>
+                                <option value="comfort">Comfort</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="groupSize">Preferred Group Size</label>
+                            <select id="groupSize" name="group_size_preference" required>
+                                <option value="">Select Size</option>
+                                <option value="2">Just me + 1 buddy</option>
+                                <option value="3">Small group (3 people)</option>
+                                <option value="4">Medium group (4 people)</option>
+                                <option value="5">Large group (5+ people)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budgetMin">Budget Range (USD)</label>
+                            <div class="budget-inputs">
+                                <input type="number" id="budgetMin" name="budget_min" placeholder="Min" min="0">
+                                <span>to</span>
+                                <input type="number" id="budgetMax" name="budget_max" placeholder="Max" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="accommodation">Accommodation Preference</label>
+                            <select id="accommodation" name="accommodation_type">
+                                <option value="any">Any</option>
+                                <option value="hotel">Hotels</option>
+                                <option value="hostel">Hostels</option>
+                                <option value="airbnb">Airbnb</option>
+                                <option value="camping">Camping</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="languages">Languages You Speak</label>
+                            <div class="language-tags" id="languageTags">
+                                <input type="text" id="languageInput" placeholder="Type a language and press Enter">
+                            </div>
+                            <input type="hidden" id="languages" name="languages_spoken">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Interests & Activities -->
+                <div class="step-content" data-step="3">
+                    <h2><i class="fas fa-heart"></i> Interests & Activities</h2>
+                    <p>Select all that apply to help us find compatible travel buddies:</p>
+                    <div class="interests-grid">
+                        <div class="interest-category">
+                            <h3>Adventure</h3>
+                            <div class="interest-options">
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="hiking">
+                                    <span><i class="fas fa-hiking"></i> Hiking</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="climbing">
+                                    <span><i class="fas fa-mountain"></i> Rock Climbing</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="surfing">
+                                    <span><i class="fas fa-water"></i> Surfing</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="skiing">
+                                    <span><i class="fas fa-skiing"></i> Skiing</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="interest-category">
+                            <h3>Culture</h3>
+                            <div class="interest-options">
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="museums">
+                                    <span><i class="fas fa-landmark"></i> Museums</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="art">
+                                    <span><i class="fas fa-palette"></i> Art</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="history">
+                                    <span><i class="fas fa-scroll"></i> History</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="architecture">
+                                    <span><i class="fas fa-building"></i> Architecture</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="interest-category">
+                            <h3>Food & Drink</h3>
+                            <div class="interest-options">
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="food">
+                                    <span><i class="fas fa-utensils"></i> Local Cuisine</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="wine">
+                                    <span><i class="fas fa-wine-glass"></i> Wine Tasting</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="cooking">
+                                    <span><i class="fas fa-chef-hat"></i> Cooking Classes</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="street-food">
+                                    <span><i class="fas fa-hamburger"></i> Street Food</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="interest-category">
+                            <h3>Nature & Relaxation</h3>
+                            <div class="interest-options">
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="beaches">
+                                    <span><i class="fas fa-umbrella-beach"></i> Beaches</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="wildlife">
+                                    <span><i class="fas fa-paw"></i> Wildlife</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="photography">
+                                    <span><i class="fas fa-camera"></i> Photography</span>
+                                </label>
+                                <label class="interest-option">
+                                    <input type="checkbox" name="interests" value="yoga">
+                                    <span><i class="fas fa-spa"></i> Yoga & Wellness</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Photo Upload -->
+                <div class="step-content" data-step="4">
+                    <h2><i class="fas fa-camera"></i> Profile Photo</h2>
+                    <p>Add a profile photo to help other travelers recognize you!</p>
+                    <div class="photo-upload-section">
+                        <div class="photo-preview" id="photoPreview">
+                            <i class="fas fa-user-circle"></i>
+                            <p>No photo selected</p>
+                        </div>
+                        <div class="upload-controls">
+                            <input type="file" id="profilePhoto" name="profile_photo" accept="image/*" style="display: none;">
+                            <button type="button" class="btn btn-outline" onclick="document.getElementById('profilePhoto').click()">
+                                <i class="fas fa-upload"></i> Choose Photo
+                            </button>
+                            <button type="button" class="btn btn-outline" onclick="removePhoto()" id="removePhotoBtn" style="display: none;">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </div>
+                        <div class="upload-guidelines">
+                            <h4>Photo Guidelines:</h4>
+                            <ul>
+                                <li>Use a clear, recent photo of yourself</li>
+                                <li>Face should be clearly visible</li>
+                                <li>Maximum file size: 5MB</li>
+                                <li>Supported formats: JPG, PNG, GIF</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-outline" id="prevBtn" onclick="changeStep(-1)" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary" id="nextBtn" onclick="changeStep(1)">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">
+                        <i class="fas fa-check"></i> Complete Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/profile-setup.js"></script>
+</body>
+</html>

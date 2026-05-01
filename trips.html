@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Trips - Travel Together</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1><i class="fas fa-plane"></i> Travel Together</h1>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="search.html" class="nav-link">Find Buddies</a>
+                <a href="trips.html" class="nav-link active">My Trips</a>
+                <a href="messages.html" class="nav-link">Messages <span id="unreadCount" class="badge"></span></a>
+                <div class="user-menu">
+                    <div class="user-avatar" onclick="toggleUserMenu()">
+                        <img id="userAvatar" src="https://via.placeholder.com/40" alt="User Avatar">
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="container">
+            <!-- Trips Header -->
+            <section class="trips-header">
+                <div class="header-content">
+                    <h1><i class="fas fa-map-marked-alt"></i> My Trips</h1>
+                    <p>Plan, organize, and manage your travel adventures</p>
+                </div>
+                <button class="btn btn-primary" onclick="showCreateTripModal()">
+                    <i class="fas fa-plus"></i> Create New Trip
+                </button>
+            </section>
+
+            <!-- Trip Tabs -->
+            <section class="trip-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="my-trips" onclick="switchTab('my-trips')">
+                        <i class="fas fa-suitcase"></i> My Trips
+                    </button>
+                    <button class="tab-btn" data-tab="discover-trips" onclick="switchTab('discover-trips')">
+                        <i class="fas fa-search"></i> Discover Trips
+                    </button>
+                </div>
+            </section>
+
+            <!-- My Trips Tab -->
+            <section id="my-trips" class="tab-content active">
+                <div class="trips-filters">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-status="all" onclick="filterTrips('all')">All</button>
+                        <button class="filter-btn" data-status="planning" onclick="filterTrips('planning')">Planning</button>
+                        <button class="filter-btn" data-status="open" onclick="filterTrips('open')">Open</button>
+                        <button class="filter-btn" data-status="full" onclick="filterTrips('full')">Full</button>
+                        <button class="filter-btn" data-status="completed" onclick="filterTrips('completed')">Completed</button>
+                    </div>
+                </div>
+
+                <div class="trips-grid" id="myTripsGrid">
+                    <!-- Trips will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Discover Trips Tab -->
+            <section id="discover-trips" class="tab-content">
+                <div class="discover-filters">
+                    <div class="filters-row">
+                        <input type="text" id="destinationSearch" placeholder="Search destination...">
+                        <input type="date" id="startDateSearch">
+                        <input type="date" id="endDateSearch">
+                        <select id="tripTypeSearch">
+                            <option value="">Any Type</option>
+                            <option value="adventure">Adventure</option>
+                            <option value="relaxation">Relaxation</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="business">Business</option>
+                            <option value="educational">Educational</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="searchTrips()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="trips-grid" id="discoverTripsGrid">
+                    <!-- Discovered trips will be loaded here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Create Trip Modal -->
+    <div id="createTripModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('createTripModal')">&times;</span>
+            <h2><i class="fas fa-plus-circle"></i> Create New Trip</h2>
+            <form id="createTripForm" class="trip-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tripTitle">Trip Title *</label>
+                        <input type="text" id="tripTitle" name="title" required placeholder="e.g., Backpacking through Europe">
+                    </div>
+                    <div class="form-group">
+                        <label for="tripDestination">Destination *</label>
+                        <input type="text" id="tripDestination" name="destination" required placeholder="e.g., Paris, France">
+                    </div>
+                    <div class="form-group">
+                        <label for="tripStartDate">Start Date *</label>
+                        <input type="date" id="tripStartDate" name="start_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tripEndDate">End Date *</label>
+                        <input type="date" id="tripEndDate" name="end_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tripType">Trip Type</label>
+                        <select id="tripType" name="trip_type">
+                            <option value="adventure">Adventure</option>
+                            <option value="relaxation">Relaxation</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="business">Business</option>
+                            <option value="educational">Educational</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="maxParticipants">Max Participants</label>
+                        <input type="number" id="maxParticipants" name="max_participants" min="2" max="20" value="4">
+                    </div>
+                    <div class="form-group">
+                        <label for="budgetPerPerson">Budget per Person (USD)</label>
+                        <input type="number" id="budgetPerPerson" name="budget_per_person" min="0" placeholder="Optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="difficultyLevel">Difficulty Level</label>
+                        <select id="difficultyLevel" name="difficulty_level">
+                            <option value="easy">Easy</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="challenging">Challenging</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="tripDescription">Description</label>
+                    <textarea id="tripDescription" name="description" rows="4" placeholder="Describe your trip, what you plan to do, and what kind of travel companions you're looking for..."></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="tripRequirements">Requirements (Optional)</label>
+                    <textarea id="tripRequirements" name="requirements" rows="3" placeholder="Any specific requirements or preferences for travel companions..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('createTripModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Trip</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Trip Details Modal -->
+    <div id="tripDetailsModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('tripDetailsModal')">&times;</span>
+            <div id="tripDetailsContent">
+                <!-- Trip details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Join Trip Modal -->
+    <div id="joinTripModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('joinTripModal')">&times;</span>
+            <h2><i class="fas fa-user-plus"></i> Join Trip</h2>
+            <div id="joinTripContent">
+                <p>Why would you like to join this trip?</p>
+                <textarea id="joinMessage" rows="4" placeholder="Tell the trip creator why you'd be a great travel companion..."></textarea>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('joinTripModal')">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitJoinRequest()">Send Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/trips.js"></script>
+</body>
+</html>
